@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/departure"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:drawableLeft="@drawable/takeoff"
+            android:text="departure"/>
+
+        <TextView
+            android:id="@+id/landing"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/departure"
+            android:layout_height="80dp"
+            android:drawablePadding="5dp"
+            android:paddingLeft="10dp"
+            android:drawableLeft="@drawable/landing"
+            android:background="@color/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:background="@color/colorPrimary"
+            android:layout_below="@id/landing">
+
+            <TextView
+                android:id="@+id/checkin"
+                android:layout_width="match_parent"
+                android:layout_weight="1.0"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/calendar"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/checkout"
+                android:layout_width="match_parent"
+                android:layout_weight="1.0"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/calendar"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
