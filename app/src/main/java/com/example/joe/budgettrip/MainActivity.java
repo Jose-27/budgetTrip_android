@@ -30,13 +30,24 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
-    private TextView mCheckin, mCheckout, mDeparture, mLanding;
     private static final String TAG = "";
 
     private int month, day, year;
+
+    @BindView(R.id.checkin)   TextView mCheckin;
+    @BindView(R.id.checkout)  TextView mCheckout;
+    @BindView(R.id.departure) TextView mDeparture;
+    @BindView(R.id.landing)   TextView mLanding;
+
+
+
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -49,18 +60,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_main);
 
-        mCheckin = (TextView) findViewById(R.id.checkin);
-        mCheckout = (TextView) findViewById(R.id.checkout);
-        mDeparture = (TextView) findViewById(R.id.departure);
-        mLanding = (TextView) findViewById(R.id.landing);
-
-        mCheckin.setOnClickListener(this);
-        mCheckout.setOnClickListener(this);
-        mDeparture.setOnClickListener(this);
-        mLanding.setOnClickListener(this);
+        ButterKnife.bind(this);
 
     }
 
+    @OnClick({R.id.checkin, R.id.checkout,R.id.landing,R.id.departure})
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
