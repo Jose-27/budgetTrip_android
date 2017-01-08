@@ -27,7 +27,9 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final int REQUEST_CODE_AUTOCOMPLETE = 1;
+    int DEPARTURE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    int LANDING_AUTOCOMPLETE_REQUEST_CODE   = 2;
+
     private static final String TAG = "";
 
     private int month, day, year;
@@ -52,11 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if (v == mDeparture) {
-            openAutocompleteActivity();
+            openAutocompleteActivity(DEPARTURE_AUTOCOMPLETE_REQUEST_CODE);
         }
 
         if (v == mLanding) {
-            openAutocompleteActivity();
+            openAutocompleteActivity(LANDING_AUTOCOMPLETE_REQUEST_CODE);
         }
 
         if (v == mCheckin) {
@@ -101,34 +103,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Check that the result was from the autocomplete widget.
-        if (requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+        if (requestCode == DEPARTURE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                // Get the user's selected place from the Intent.
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                Log.i(TAG, "Place Selected: " + place.getName());
 
-                // Format the place's details and display them in the TextView.
+                Place place = PlaceAutocomplete.getPlace(this, data);
+
                 mDeparture.setText(place.getAddress());
 
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+
                 Status status = PlaceAutocomplete.getStatus(this, data);
                 Log.e(TAG, "Error: Status = " + status.toString());
+
             } else if (resultCode == RESULT_CANCELED) {
-                // Indicates that the activity closed before a selection was made. For example if
-                // the user pressed the back button.
+
+            }
+        }
+        else if (requestCode == LANDING_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+
+                Place place = PlaceAutocomplete.getPlace(this, data);
+
+                mLanding.setText(place.getAddress());
+
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                Log.e(TAG, "Error: Status = " + status.toString());
+
+            } else if (resultCode == RESULT_CANCELED) {
+
             }
         }
     }
 
-    private void openAutocompleteActivity() {
+    private void openAutocompleteActivity(int mode) {
 
         try {
             // The autocomplete activity requires Google Play Services to be available. The intent
             // builder checks this and throws an exception if it is not the case.
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
                     .build(this);
-            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+            startActivityForResult(intent, mode);
         } catch (GooglePlayServicesRepairableException e) {
             // Indicates that Google Play Services is either not installed or not up to date. Prompt
             // the user to correct the issue.
