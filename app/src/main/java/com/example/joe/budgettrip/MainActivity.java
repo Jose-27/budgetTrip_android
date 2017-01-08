@@ -52,50 +52,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View v) {
+        
+        switch (v.getId()){
+            case R.id.departure:
+                openAutocompleteActivity(DEPARTURE_AUTOCOMPLETE_REQUEST_CODE);
+                break;
+            case R.id.landing:
+                openAutocompleteActivity(LANDING_AUTOCOMPLETE_REQUEST_CODE);
+                break;
+            case R.id.checkin:
 
-        if (v == mDeparture) {
-            openAutocompleteActivity(DEPARTURE_AUTOCOMPLETE_REQUEST_CODE);
-        }
+                Calendar c = Calendar.getInstance();
 
-        if (v == mLanding) {
-            openAutocompleteActivity(LANDING_AUTOCOMPLETE_REQUEST_CODE);
-        }
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+                year = c.get(Calendar.YEAR);
 
-        if (v == mCheckin) {
-            final Calendar c = Calendar.getInstance();
+                DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
-            month = c.get(Calendar.MONTH);
-            day = c.get(Calendar.DAY_OF_MONTH);
-            year = c.get(Calendar.YEAR);
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mCheckin.setText((month + 1) + "/" + dayOfMonth + "/" + year);
+                    }
+                }, month, day, year);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+                break;
+            case R.id.checkout:
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                c = Calendar.getInstance();
 
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    mCheckin.setText((month + 1) + "/" + dayOfMonth + "/" + year);
-                }
-            }, month, day, year);
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-            datePickerDialog.show();
-        }
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+                year = c.get(Calendar.YEAR);
 
-        if (v == mCheckout) {
-            final Calendar c = Calendar.getInstance();
-
-            month = c.get(Calendar.MONTH);
-            day = c.get(Calendar.DAY_OF_MONTH);
-            year = c.get(Calendar.YEAR);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+                datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
 
 
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    mCheckout.setText((month + 1) + "/" + dayOfMonth + "/" + year);
-                }
-            }, month, day, year);
-            datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
-            datePickerDialog.show();
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        mCheckout.setText((month + 1) + "/" + dayOfMonth + "/" + year);
+                    }
+                }, month, day, year);
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog.show();
+                break;
         }
     }
 
